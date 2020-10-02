@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this,AddContact.class);
-                startActivityForResult(i,1);
+                Intent i = new Intent(MainActivity.this, AddContact.class);
+                startActivityForResult(i, 1);
             }
         });
 
@@ -58,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
         contactViewModel.getAllContacts().observe(this, new Observer<List<Contact>>() {
             @Override
             public void onChanged(List<Contact> contacts) {
-              adapter.setContacts(contacts);
+                adapter.setContacts(contacts);
             }
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -70,8 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
-                if(direction == ItemTouchHelper.LEFT)
-                {
+                if (direction == ItemTouchHelper.LEFT) {
                     new AlertDialog.Builder(MainActivity.this)
                             .setCancelable(false)
                             .setTitle("Delete entry")
@@ -90,9 +89,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }).setIcon(R.drawable.delete).show();
                 }
-                if(direction == ItemTouchHelper.RIGHT)
-                {
-                    String url = "https://api.whatsapp.com/send?phone=91"+adapter.getContactAt(viewHolder.getAdapterPosition()).getMobileNumber();
+                if (direction == ItemTouchHelper.RIGHT) {
+                    String url = "https://api.whatsapp.com/send?phone=91" + adapter.getContactAt(viewHolder.getAdapterPosition()).getMobileNumber();
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setPackage("com.whatsapp");
                     i.setData(Uri.parse(url));
@@ -104,19 +102,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                        .addSwipeLeftBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.red))
+                        .addSwipeLeftBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.red))
                         .addSwipeLeftActionIcon(R.drawable.delete_bg)
-                        .addSwipeRightBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.lightgreen))
+                        .addSwipeRightBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.lightgreen))
                         .addSwipeRightActionIcon(R.drawable.whatsapp)
                         .create()
                         .decorate();
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
         }).attachToRecyclerView(recyclerView);
+
+        adapter.setOnItemClickListener(new ContactAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Contact contact) {
+
+                Intent i = new Intent(MainActivity.this, EditContact.class);
+                i.putExtra("id", contact.getId());
+                i.putExtra("fName", contact.getFirstName());
+                i.putExtra("lName", contact.getLastName());
+                i.putExtra("mobile", contact.getMobileNumber());
+                i.putExtra("email", contact.getEmailId());
+                i.putExtra("company", contact.getCompanyName());
+                i.putExtra("job", contact.getJobTitle());
+                startActivityForResult(i, 2);
+            }
+        });
     }
 
-    public void deleteContact(Contact contact)
-    {
+    public void deleteContact(Contact contact) {
         contactViewModel.delete(contact);
     }
 
@@ -124,24 +137,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && requestCode == 1){
-            String fName = data.getStringExtra("fName");
-            String lName = data.getStringExtra("lname");
-            String mobile = data.getStringExtra("mobile");
-            String email = data.getStringExtra("email");
-            String company = data.getStringExtra("company");
-            String jobTitle = data.getStringExtra("jobTitle");
 
-            Contact contact = new Contact(fName,lName,company,jobTitle,email,mobile);
+        String fName = data.getStringExtra("fName");
+        String lName = data.getStringExtra("lName");
+        String mobile = data.getStringExtra("mobile");
+        String email = data.getStringExtra("email");
+        String company = data.getStringExtra("company");
+        String jobTitle = data.getStringExtra("jobTitle");
+        Contact contact = new Contact(fName, lName, company, jobTitle, email, mobile);
+
+        if (resultCode == RESULT_OK && requestCode == 1) {
             contactViewModel.insert(contact);
+            Toast.makeText(this, "Contact Added", Toast.LENGTH_SHORT).show();
+        } else if (resultCode == RESULT_OK && requestCode == 2){
 
-            Toast.makeText(this, "Contact Saved", Toast.LENGTH_SHORT).show();
-        }else{
+            int id = data.getIntExtra("id",-1);
+            if (id == -1) {
+                Toast.makeText(this, "Contact could not be updated", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                contact.setId(id);
+                contactViewModel.update(contact);
+                Toast.makeText(this, "Contact Updated", Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
             Toast.makeText(this, "Contact saving error", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void makeCall(String phone) {
-
     }
 }

@@ -47,9 +47,6 @@ public abstract class ContactDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            contactDao.insert(new Contact("Shubham","Vyas","EncyCode","Senior Developer","svyas878@gmail.com","8238668194"));
-            contactDao.insert(new Contact("Hiren","Panchani","EncyCode","Senior Developer","hiren_panchani@yahoo.com","7359737457"));
-            contactDao.insert(new Contact("Darshan","Vadodariya","EncyCode","Senior Developer","darshanvadodariya71@gmail.com","98793454039"));
             return null;
         }
     }

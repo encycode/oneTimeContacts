@@ -10,10 +10,10 @@ public class Contact {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @ColumnInfo(name = "fname")
+    @ColumnInfo(name = "f_name")
     private String firstName;
 
-    @ColumnInfo(name = "lname")
+    @ColumnInfo(name = "l_name")
     private String lastName;
 
     @ColumnInfo(name = "company_name")

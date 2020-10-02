@@ -10,34 +10,43 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Objects;
 
-public class AddContact extends AppCompatActivity {
+public class EditContact extends AppCompatActivity {
 
-    private EditText fName, lName, mobile, email, company, jobTitle;
-    private Button save, discard;
+    TextView fName,lName,mobile,email,company,job;
+    Button save,discard;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_contact);
+        setContentView(R.layout.activity_edit_contact);
 
         Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.close);
-        setTitle("Add Contact");
+        setTitle("Edit Contact");
 
         fName = findViewById(R.id.firstNameET);
         lName = findViewById(R.id.lastNameET);
         mobile = findViewById(R.id.mobileNumberET);
         email = findViewById(R.id.emailIdET);
         company = findViewById(R.id.companyET);
-        jobTitle = findViewById(R.id.jobET);
+        job = findViewById(R.id.jobET);
 
         save = findViewById(R.id.saveBtn);
         discard = findViewById(R.id.discardBtn);
 
+        fName.setText(getIntent().getStringExtra("fName"));
+        lName.setText(getIntent().getStringExtra("lName"));
+        mobile.setText(getIntent().getStringExtra("mobile"));
+        email.setText(getIntent().getStringExtra("email"));
+        company.setText(getIntent().getStringExtra("company"));
+        job.setText(getIntent().getStringExtra("job"));
+
+        id = (int)getIntent().getIntExtra("id",-1);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +63,7 @@ public class AddContact extends AppCompatActivity {
                 finish();
             }
         });
+
     }
     private void saveContact()
     {
@@ -62,7 +72,7 @@ public class AddContact extends AppCompatActivity {
         String mobileStr = mobile.getText().toString();
         String emailStr = email.getText().toString();
         String companyStr = company.getText().toString();
-        String jobStr = jobTitle.getText().toString();
+        String jobStr = job.getText().toString();
 
         if(fNameStr.trim().isEmpty() || mobileStr.trim().isEmpty())
         {
@@ -71,6 +81,7 @@ public class AddContact extends AppCompatActivity {
         }
 
         Intent data = new Intent();
+        data.putExtra("id",id);
         data.putExtra("fName",fNameStr);
         data.putExtra("lName",lNameStr);
         data.putExtra("mobile",mobileStr);
