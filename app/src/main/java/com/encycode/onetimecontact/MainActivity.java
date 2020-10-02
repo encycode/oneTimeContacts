@@ -92,9 +92,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(direction == ItemTouchHelper.RIGHT)
                 {
-                    String phone = adapter.getContactAt(viewHolder.getAdapterPosition()).getMobileNumber();
-                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
-                    startActivity(intent);
+                    String url = "https://api.whatsapp.com/send?phone=91"+adapter.getContactAt(viewHolder.getAdapterPosition()).getMobileNumber();
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
                     adapter.notifyItemChanged(viewHolder.getAdapterPosition());
                 }
             }
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         .addSwipeLeftBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.red))
                         .addSwipeLeftActionIcon(R.drawable.delete_bg)
                         .addSwipeRightBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.lightgreen))
-                        .addSwipeRightActionIcon(R.drawable.call)
+                        .addSwipeRightActionIcon(R.drawable.whatsapp)
                         .create()
                         .decorate();
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
@@ -137,5 +138,9 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, "Contact saving error", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void makeCall(String phone) {
+
     }
 }

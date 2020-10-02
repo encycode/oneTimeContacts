@@ -1,5 +1,7 @@
 package com.encycode.onetimecontact.adapter;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.encycode.onetimecontact.MainActivity;
 import com.encycode.onetimecontact.R;
 import com.encycode.onetimecontact.entity.Contact;
 
@@ -28,10 +31,19 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContactHolder holder, int position) {
-        Contact currentContact = contacts.get(position);
+    public void onBindViewHolder(@NonNull final ContactHolder holder, int position) {
+        final Contact currentContact = contacts.get(position);
         holder.fullName.setText(new StringBuilder().append(currentContact.getFirstName()).append(" ").append(currentContact.getLastName()).toString());
         holder.mobileNumber.setText(currentContact.getMobileNumber());
+
+        holder.call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phone = currentContact.getMobileNumber();
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
 
     }
 
@@ -53,11 +65,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
     class ContactHolder extends RecyclerView.ViewHolder{
         private TextView fullName;
         private TextView mobileNumber;
+        private ImageButton call;
 
         public ContactHolder(@NonNull View itemView) {
             super(itemView);
             fullName = itemView.findViewById(R.id.fullName);
             mobileNumber = itemView.findViewById(R.id.mobileNumber);
+            call = itemView.findViewById(R.id.callButton);
         }
     }
 }
