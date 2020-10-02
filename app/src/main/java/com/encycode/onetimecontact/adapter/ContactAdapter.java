@@ -5,7 +5,10 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,11 +20,13 @@ import com.encycode.onetimecontact.R;
 import com.encycode.onetimecontact.entity.Contact;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactHolder> {
+public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactHolder> implements Filterable {
 
     private List<Contact> contacts = new ArrayList<>();
+    private List<Contact> contactsfull;
     private OnItemClickListener listener;
 
     @NonNull
@@ -60,8 +65,45 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
 
     public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
+        this.contactsfull = contacts;
         notifyDataSetChanged();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            List<Contact> filteredList = new ArrayList<>();
+
+            if(constraint.toString().isEmpty())
+            {
+                filteredList.addAll(contacts);
+            }else {
+                for(Contact item :contacts){
+                    if(item.getFirstName().toLowerCase().contains(constraint.toString().toLowerCase()) || item.getLastName().toLowerCase().contains(constraint.toString().toLowerCase()) || item.getCompanyName().contains(constraint.toString().toLowerCase()) || item.getJobTitle().contains(constraint.toString().toLowerCase())){
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            contacts.clear();
+            contacts.addAll((Collection<? extends Contact>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     class ContactHolder extends RecyclerView.ViewHolder {
         private TextView fullName;

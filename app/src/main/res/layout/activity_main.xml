@@ -9,6 +9,9 @@
     tools:context=".MainActivity">
 
     <EditText
+        android:id="@+id/search_bar"
+        android:maxLines="1"
+        android:singleLine="true"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="20dp"
