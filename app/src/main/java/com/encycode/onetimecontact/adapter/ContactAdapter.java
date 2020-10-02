@@ -40,6 +40,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
         return contacts.size();
     }
 
+    public Contact getContactAt(int pos)
+    {
+        return contacts.get(pos);
+    }
+
     public void setContacts(List<Contact> contacts){
         this.contacts = contacts;
         notifyDataSetChanged();
@@ -48,14 +53,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
     class ContactHolder extends RecyclerView.ViewHolder{
         private TextView fullName;
         private TextView mobileNumber;
-        private ImageButton call;
 
         public ContactHolder(@NonNull View itemView) {
             super(itemView);
             fullName = itemView.findViewById(R.id.fullName);
             mobileNumber = itemView.findViewById(R.id.mobileNumber);
-
-            call = itemView.findViewById(R.id.callButton);
         }
     }
 }

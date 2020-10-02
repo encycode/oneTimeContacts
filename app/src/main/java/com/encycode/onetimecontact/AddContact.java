@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Objects;
 
 public class AddContact extends AppCompatActivity {
 
@@ -22,7 +25,7 @@ public class AddContact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.close);
+        Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.close);
         setTitle("Add Contact");
 
         fName = findViewById(R.id.firstNameET);
@@ -34,6 +37,23 @@ public class AddContact extends AppCompatActivity {
 
         save = findViewById(R.id.saveBtn);
         discard = findViewById(R.id.discardBtn);
+
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveContact();
+            }
+        });
+
+        discard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
     private void saveContact()
     {
