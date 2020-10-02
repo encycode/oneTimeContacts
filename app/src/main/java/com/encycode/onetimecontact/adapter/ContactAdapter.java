@@ -65,7 +65,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
 
     public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
-        this.contactsfull = contacts;
+        this.contactsfull = new ArrayList<>(contacts);
         notifyDataSetChanged();
     }
 
@@ -82,10 +82,14 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
 
             if(constraint.toString().isEmpty())
             {
-                filteredList.addAll(contacts);
+                filteredList.addAll(contactsfull);
             }else {
-                for(Contact item :contacts){
-                    if(item.getFirstName().toLowerCase().contains(constraint.toString().toLowerCase()) || item.getLastName().toLowerCase().contains(constraint.toString().toLowerCase()) || item.getCompanyName().contains(constraint.toString().toLowerCase()) || item.getJobTitle().contains(constraint.toString().toLowerCase())){
+                for(Contact item :contactsfull){
+                    if(item.getFirstName().toLowerCase().contains(constraint.toString().toLowerCase()) ||
+                            item.getLastName().toLowerCase().contains(constraint.toString().toLowerCase()) ||
+                            item.getCompanyName().contains(constraint.toString().toLowerCase()) ||
+                            item.getJobTitle().contains(constraint.toString().toLowerCase()) ||
+                            item.getMobileNumber().contains(constraint.toString().toLowerCase())){
                         filteredList.add(item);
                     }
                 }

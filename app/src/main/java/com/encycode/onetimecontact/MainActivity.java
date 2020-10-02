@@ -191,4 +191,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Contact saving error", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }
