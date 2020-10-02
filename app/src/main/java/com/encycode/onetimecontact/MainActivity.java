@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     String url = "https://api.whatsapp.com/send?phone=91"+adapter.getContactAt(viewHolder.getAdapterPosition()).getMobileNumber();
                     Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setPackage("com.whatsapp");
                     i.setData(Uri.parse(url));
                     startActivity(i);
                     adapter.notifyItemChanged(viewHolder.getAdapterPosition());
