@@ -35,6 +35,7 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 public class MainActivity extends AppCompatActivity {
 
     private ContactViewModel contactViewModel;
+    boolean floatSwitch = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,9 +44,39 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
+        final FloatingActionButton mainBtn = findViewById(R.id.mainBtn);
+        final FloatingActionButton contactBtn = findViewById(R.id.addContactBtn);
+        final FloatingActionButton dialpadBtn = findViewById(R.id.dialpadBtn);
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+
+        mainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                floatSwitch = !floatSwitch;
+                //Toast.makeText(MainActivity.this, ""+floatSwitch, Toast.LENGTH_SHORT).show();
+                if(floatSwitch) {
+                    mainBtn.setImageDrawable(getDrawable(R.drawable.close));
+                    contactBtn.setVisibility(View.VISIBLE);
+                    dialpadBtn.setVisibility(View.VISIBLE);
+                } else {
+                    contactBtn.setVisibility(View.GONE);
+                    dialpadBtn.setVisibility(View.GONE);
+                    mainBtn.setImageDrawable(getDrawable(R.drawable.add));
+                }
+            }
+        });
+
+
+
+        dialpadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this,DialerActivity.class);
+                startActivity(i);
+            }
+        });
+
+        contactBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, AddContact.class);
