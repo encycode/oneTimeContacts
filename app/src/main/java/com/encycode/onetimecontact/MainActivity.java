@@ -27,7 +27,6 @@ import com.encycode.onetimecontact.entity.Contact;
 import com.encycode.onetimecontact.viewModel.ContactViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
         final FloatingActionButton mainBtn = findViewById(R.id.mainBtn);
         final FloatingActionButton contactBtn = findViewById(R.id.addContactBtn);
         final FloatingActionButton dialpadBtn = findViewById(R.id.dialpadBtn);
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 floatSwitch = !floatSwitch;
                 //Toast.makeText(MainActivity.this, ""+floatSwitch, Toast.LENGTH_SHORT).show();
-                if(floatSwitch) {
+                if (floatSwitch) {
                     mainBtn.setImageDrawable(getDrawable(R.drawable.close));
                     contactBtn.setVisibility(View.VISIBLE);
                     dialpadBtn.setVisibility(View.VISIBLE);
@@ -67,11 +65,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         dialpadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this,DialerActivity.class);
+                Intent i = new Intent(MainActivity.this, DialerActivity.class);
                 startActivity(i);
             }
         });
@@ -80,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, AddContact.class);
-                startActivityForResult(i, 1);
+                startActivity(i);
             }
         });
 
@@ -171,16 +168,9 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new ContactAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Contact contact) {
-
                 Intent i = new Intent(MainActivity.this, EditContact.class);
-                i.putExtra("id", contact.getId());
-                i.putExtra("fName", contact.getFirstName());
-                i.putExtra("lName", contact.getLastName());
-                i.putExtra("mobile", contact.getMobileNumber());
-                i.putExtra("email", contact.getEmailId());
-                i.putExtra("company", contact.getCompanyName());
-                i.putExtra("job", contact.getJobTitle());
-                startActivityForResult(i, 2);
+                i.putExtra("contactObj", contact);
+                startActivity(i);
             }
         });
     }
@@ -188,39 +178,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void deleteContact(Contact contact) {
         contactViewModel.delete(contact);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-
-        String fName = (data.hasExtra("fName"))?data.getStringExtra("fName"):"";
-        String lName = (data.hasExtra("fName"))?data.getStringExtra("lName"):"";
-        String mobile = (data.hasExtra("fName"))?data.getStringExtra("mobile"):"";
-        String email = (data.hasExtra("fName"))?data.getStringExtra("email"):"";
-        String company = (data.hasExtra("fName"))?data.getStringExtra("company"):"";
-        String jobTitle = (data.hasExtra("fName"))?data.getStringExtra("jobTitle"):"";
-        Contact contact = new Contact(fName, lName, company, jobTitle, email, mobile);
-
-        if (resultCode == RESULT_OK && requestCode == 1) {
-            contactViewModel.insert(contact);
-            Toast.makeText(this, "Contact Added", Toast.LENGTH_SHORT).show();
-        } else if (resultCode == RESULT_OK && requestCode == 2){
-
-            int id = data.getIntExtra("id",-1);
-            if (id == -1) {
-                Toast.makeText(this, "Contact could not be updated", Toast.LENGTH_SHORT).show();
-                return;
-            } else {
-                contact.setId(id);
-                contactViewModel.update(contact);
-                Toast.makeText(this, "Contact Updated", Toast.LENGTH_SHORT).show();
-            }
-
-        } else {
-            Toast.makeText(this, "Contact saving error", Toast.LENGTH_SHORT).show();
-        }
     }
 
 

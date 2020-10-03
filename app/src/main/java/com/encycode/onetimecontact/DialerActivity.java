@@ -201,6 +201,7 @@ public class DialerActivity extends AppCompatActivity {
                     Intent i = new Intent(DialerActivity.this, AddContact.class);
                     i.putExtra("number", numberField.getText().toString());
                     startActivity(i);
+                    finish();
                 }
             }
         });
@@ -215,9 +216,8 @@ public class DialerActivity extends AppCompatActivity {
         return data;
     }
 
-    public void addVisible()
-    {
-        if(numberField.getText().toString().isEmpty())
+    public void addVisible() {
+        if (numberField.getText().toString().isEmpty())
             add.setVisibility(View.GONE);
         else
             add.setVisibility(View.VISIBLE);

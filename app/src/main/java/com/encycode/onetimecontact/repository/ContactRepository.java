@@ -24,31 +24,31 @@ public class ContactRepository {
         allContacts = contactDao.getAllContacts();
     }
 
-    public void insert(Contact contact){
+    public void insert(Contact contact) {
         new InsertAsyncTask(contactDao).execute(contact);
     }
 
-    public void update(Contact contact){
+    public void update(Contact contact) {
         new UpdateAsyncTask(contactDao).execute(contact);
     }
 
-    public void delete(Contact contact){
+    public void delete(Contact contact) {
         new DeleteAsyncTask(contactDao).execute(contact);
     }
 
-    public void deleteAllContacts(){
+    public void deleteAllContacts() {
         new DeleteAllContactsAsyncTask(contactDao).execute();
     }
 
-    public LiveData<List<Contact>> getAllContacts(){
-            return allContacts;
+    public LiveData<List<Contact>> getAllContacts() {
+        return allContacts;
     }
 
-    private static class InsertAsyncTask extends AsyncTask<Contact,Void,Void>{
+    private static class InsertAsyncTask extends AsyncTask<Contact, Void, Void> {
 
         private ContactDao contactDao;
 
-        private InsertAsyncTask(ContactDao contactDao){
+        private InsertAsyncTask(ContactDao contactDao) {
             this.contactDao = contactDao;
         }
 
@@ -59,11 +59,11 @@ public class ContactRepository {
         }
     }
 
-    private static class UpdateAsyncTask extends AsyncTask<Contact,Void,Void>{
+    private static class UpdateAsyncTask extends AsyncTask<Contact, Void, Void> {
 
         private ContactDao contactDao;
 
-        private UpdateAsyncTask(ContactDao contactDao){
+        private UpdateAsyncTask(ContactDao contactDao) {
             this.contactDao = contactDao;
         }
 
@@ -74,11 +74,11 @@ public class ContactRepository {
         }
     }
 
-    private static class DeleteAsyncTask extends AsyncTask<Contact,Void,Void>{
+    private static class DeleteAsyncTask extends AsyncTask<Contact, Void, Void> {
 
         private ContactDao contactDao;
 
-        private DeleteAsyncTask(ContactDao contactDao){
+        private DeleteAsyncTask(ContactDao contactDao) {
             this.contactDao = contactDao;
         }
 
@@ -89,11 +89,11 @@ public class ContactRepository {
         }
     }
 
-    private static class DeleteAllContactsAsyncTask extends AsyncTask<Void,Void,Void>{
+    private static class DeleteAllContactsAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private ContactDao contactDao;
 
-        private DeleteAllContactsAsyncTask(ContactDao contactDao){
+        private DeleteAllContactsAsyncTask(ContactDao contactDao) {
             this.contactDao = contactDao;
         }
 

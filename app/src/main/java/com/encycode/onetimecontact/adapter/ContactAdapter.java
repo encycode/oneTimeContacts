@@ -80,16 +80,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
 
             List<Contact> filteredList = new ArrayList<>();
 
-            if(constraint.toString().isEmpty())
-            {
+            if (constraint.toString().isEmpty()) {
                 filteredList.addAll(contactsfull);
-            }else {
-                for(Contact item :contactsfull){
-                    if(item.getFirstName().toLowerCase().contains(constraint.toString().toLowerCase()) ||
+            } else {
+                for (Contact item : contactsfull) {
+                    if (item.getFirstName().toLowerCase().contains(constraint.toString().toLowerCase()) ||
                             item.getLastName().toLowerCase().contains(constraint.toString().toLowerCase()) ||
                             item.getCompanyName().contains(constraint.toString().toLowerCase()) ||
                             item.getJobTitle().contains(constraint.toString().toLowerCase()) ||
-                            item.getMobileNumber().contains(constraint.toString().toLowerCase())){
+                            item.getMobileNumber().contains(constraint.toString().toLowerCase())) {
                         filteredList.add(item);
                     }
                 }

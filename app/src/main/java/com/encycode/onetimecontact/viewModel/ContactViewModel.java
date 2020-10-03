@@ -22,19 +22,19 @@ public class ContactViewModel extends AndroidViewModel {
         allContacts = repository.getAllContacts();
     }
 
-    public void insert(Contact contact){
+    public void insert(Contact contact) {
         repository.insert(contact);
     }
 
-    public void delete(Contact contact){
+    public void delete(Contact contact) {
         repository.delete(contact);
     }
 
-    public void update(Contact contact){
+    public void update(Contact contact) {
         repository.update(contact);
     }
 
-    public void deleteAllContacts(){
+    public void deleteAllContacts() {
         repository.deleteAllContacts();
     }
 

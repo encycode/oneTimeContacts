@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.encycode.onetimecontact.entity.Contact;
+import com.encycode.onetimecontact.viewModel.ContactViewModel;
+
 import java.util.Objects;
 
 public class AddContact extends AppCompatActivity {
@@ -38,8 +41,7 @@ public class AddContact extends AppCompatActivity {
         save = findViewById(R.id.saveBtn);
         discard = findViewById(R.id.discardBtn);
 
-        if(getIntent().hasExtra("number"))
-        {
+        if (getIntent().hasExtra("number")) {
             mobile.setText(getIntent().getStringExtra("number").toString());
         }
 
@@ -54,14 +56,14 @@ public class AddContact extends AppCompatActivity {
         discard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i);
                 finish();
             }
         });
     }
-    private void saveContact()
-    {
+
+    private void saveContact() {
         String fNameStr = fName.getText().toString();
         String lNameStr = lName.getText().toString();
         String mobileStr = mobile.getText().toString();
@@ -69,22 +71,14 @@ public class AddContact extends AppCompatActivity {
         String companyStr = company.getText().toString();
         String jobStr = jobTitle.getText().toString();
 
-        if(fNameStr.trim().isEmpty() || mobileStr.trim().isEmpty())
-        {
+        if (fNameStr.trim().isEmpty() || mobileStr.trim().isEmpty()) {
             Toast.makeText(this, "Please inserts Mandatory fields", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        Intent data = new Intent();
-        data.putExtra("fName",fNameStr);
-        data.putExtra("lName",lNameStr);
-        data.putExtra("mobile",mobileStr);
-        data.putExtra("email",emailStr);
-        data.putExtra("company",companyStr);
-        data.putExtra("jobTitle",jobStr);
-
-        setResult(RESULT_OK,data);
-        finish();
+        new ContactViewModel(getApplication()).insert(new Contact(fNameStr, lNameStr, companyStr, jobStr, emailStr, mobileStr));
+        Intent i = new Intent(AddContact.this, MainActivity.class);
+        startActivity(i);
+        AddContact.this.finish();
     }
 
     @Override

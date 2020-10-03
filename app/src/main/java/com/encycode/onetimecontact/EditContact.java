@@ -1,10 +1,5 @@
 package com.encycode.onetimecontact;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,19 +8,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.encycode.onetimecontact.entity.Contact;
+import com.encycode.onetimecontact.viewModel.ContactViewModel;
 
 import java.util.Objects;
 
 public class EditContact extends AppCompatActivity {
 
-    TextView fName,lName,mobile,email,company,job;
-    Button save,discard;
-    TextView call,msg,mail,wtsp;
+    TextView fName, lName, mobile, email, company, job;
+    Button save, discard;
+    TextView call, msg, mail, wtsp;
+    Contact contact;
     int id;
 
     @Override
@@ -49,7 +48,8 @@ public class EditContact extends AppCompatActivity {
         company = findViewById(R.id.companyET);
         job = findViewById(R.id.jobET);
 
-        id = (int)getIntent().getIntExtra("id",-1);
+
+        contact = (Contact) getIntent().getSerializableExtra("contactObj");
 
         final String phone = getIntent().getStringExtra("mobile");
 
@@ -65,7 +65,7 @@ public class EditContact extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-                sendIntent.setData(Uri.parse("sms:"+phone));
+                sendIntent.setData(Uri.parse("sms:" + phone));
                 startActivity(sendIntent);
             }
         });
@@ -74,14 +74,14 @@ public class EditContact extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String emailStr = getIntent().getStringExtra("email");
-                if(emailStr.isEmpty() || email.getText().toString().isEmpty()) {
+                if (emailStr.isEmpty() || email.getText().toString().isEmpty()) {
                     Toast.makeText(EditContact.this, "Enter Email to use this function", Toast.LENGTH_SHORT).show();
                 } else {
-                    if(emailStr.isEmpty()){
+                    if (emailStr.isEmpty()) {
                         emailStr = email.getText().toString();
                     }
                     Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-                    sendIntent.setData(Uri.parse("mailto:"+emailStr));
+                    sendIntent.setData(Uri.parse("mailto:" + emailStr));
                     startActivity(sendIntent);
                 }
             }
@@ -101,13 +101,12 @@ public class EditContact extends AppCompatActivity {
         save = findViewById(R.id.saveBtn);
         discard = findViewById(R.id.discardBtn);
 
-        fName.setText(getIntent().getStringExtra("fName"));
-        lName.setText(getIntent().getStringExtra("lName"));
-        mobile.setText(getIntent().getStringExtra("mobile"));
-        email.setText(getIntent().getStringExtra("email"));
-        company.setText(getIntent().getStringExtra("company"));
-        job.setText(getIntent().getStringExtra("job"));
-
+        fName.setText(contact.getFirstName());
+        lName.setText(contact.getLastName());
+        mobile.setText(contact.getMobileNumber());
+        email.setText(contact.getEmailId());
+        company.setText(contact.getCompanyName());
+        job.setText(contact.getJobTitle());
 
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -120,38 +119,30 @@ public class EditContact extends AppCompatActivity {
         discard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i);
                 finish();
             }
         });
 
     }
-    private void saveContact()
-    {
-        String fNameStr = fName.getText().toString();
-        String lNameStr = lName.getText().toString();
-        String mobileStr = mobile.getText().toString();
-        String emailStr = email.getText().toString();
-        String companyStr = company.getText().toString();
-        String jobStr = job.getText().toString();
 
-        if(fNameStr.trim().isEmpty() || mobileStr.trim().isEmpty())
-        {
+    private void saveContact() {
+        Contact contact = (Contact) getIntent().getSerializableExtra("contactObj");
+        contact.setFirstName(fName.getText().toString());
+        contact.setLastName(lName.getText().toString());
+        contact.setCompanyName(company.getText().toString());
+        contact.setEmailId(email.getText().toString());
+        contact.setMobileNumber(mobile.getText().toString());
+        contact.setJobTitle(job.getText().toString());
+
+
+        if (fName.getText().toString().trim().isEmpty() || mobile.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Please inserts Mandatory fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Intent data = new Intent();
-        data.putExtra("id",id);
-        data.putExtra("fName",fNameStr);
-        data.putExtra("lName",lNameStr);
-        data.putExtra("mobile",mobileStr);
-        data.putExtra("email",emailStr);
-        data.putExtra("company",companyStr);
-        data.putExtra("jobTitle",jobStr);
-
-        setResult(RESULT_OK,data);
+        new ContactViewModel(getApplication()).update(contact);
         finish();
     }
 

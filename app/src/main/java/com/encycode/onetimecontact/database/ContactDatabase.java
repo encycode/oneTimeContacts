@@ -19,9 +19,9 @@ public abstract class ContactDatabase extends RoomDatabase {
 
     public abstract ContactDao contactDao();
 
-    public static synchronized ContactDatabase getInstance(Context context){
-        if(instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(),ContactDatabase.class,"contact_database")
+    public static synchronized ContactDatabase getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(context.getApplicationContext(), ContactDatabase.class, "contact_database")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
                     .build();
@@ -29,7 +29,7 @@ public abstract class ContactDatabase extends RoomDatabase {
         return instance;
     }
 
-    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
+    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -37,11 +37,10 @@ public abstract class ContactDatabase extends RoomDatabase {
         }
     };
 
-    private static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void>{
+    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private ContactDao contactDao;
 
-        private PopulateDbAsyncTask(ContactDatabase db)
-        {
+        private PopulateDbAsyncTask(ContactDatabase db) {
             contactDao = db.contactDao();
         }
 
