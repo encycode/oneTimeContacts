@@ -25,11 +25,6 @@ public class AddContact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
 
-
-        String number = getIntent().getStringExtra("number");
-
-
-
         Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.close);
         setTitle("Add Contact");
 
@@ -43,8 +38,9 @@ public class AddContact extends AppCompatActivity {
         save = findViewById(R.id.saveBtn);
         discard = findViewById(R.id.discardBtn);
 
-        if(!number.isEmpty()){
-           mobile.setText(number);
+        if(getIntent().hasExtra("number"))
+        {
+            mobile.setText(getIntent().getStringExtra("number").toString());
         }
 
 

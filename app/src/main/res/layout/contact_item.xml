@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="20dp"
     android:background="@drawable/card_bg"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:layout_marginHorizontal="20dp"
+    android:paddingVertical="15dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -18,7 +18,7 @@
             android:id="@+id/fullName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="0dp"
             android:text="Shubham Vyas"
             android:textColor="@color/white"
             android:textSize="15sp"
@@ -28,7 +28,7 @@
             android:id="@+id/mobileNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="4dp"
             android:text="8238668194"
             android:textColor="@color/white"
@@ -41,13 +41,22 @@
         android:layout_height="match_parent"
         android:gravity="right|center_vertical">
 
-        <ImageButton
+        <LinearLayout
             android:id="@+id/callButton"
-            android:layout_width="70dp"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="right|center_vertical">
+
+        <ImageButton
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/transparent"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/call" />
+            android:background="@drawable/shape"
+            android:layout_gravity="end"
+            android:padding="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/call_small" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

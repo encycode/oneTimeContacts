@@ -11,6 +11,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 public class DialerActivity extends AppCompatActivity {
 
 
@@ -22,6 +24,9 @@ public class DialerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialer);
+
+        Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.close);
+        setTitle("Dialpad");
 
 
         one = findViewById(R.id.btn1);

@@ -195,12 +195,12 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
 
-        String fName = data.getStringExtra("fName");
-        String lName = data.getStringExtra("lName");
-        String mobile = data.getStringExtra("mobile");
-        String email = data.getStringExtra("email");
-        String company = data.getStringExtra("company");
-        String jobTitle = data.getStringExtra("jobTitle");
+        String fName = (data.hasExtra("fName"))?data.getStringExtra("fName"):"";
+        String lName = (data.hasExtra("fName"))?data.getStringExtra("lName"):"";
+        String mobile = (data.hasExtra("fName"))?data.getStringExtra("mobile"):"";
+        String email = (data.hasExtra("fName"))?data.getStringExtra("email"):"";
+        String company = (data.hasExtra("fName"))?data.getStringExtra("company"):"";
+        String jobTitle = (data.hasExtra("fName"))?data.getStringExtra("jobTitle"):"";
         Contact contact = new Contact(fName, lName, company, jobTitle, email, mobile);
 
         if (resultCode == RESULT_OK && requestCode == 1) {

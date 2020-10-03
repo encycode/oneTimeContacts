@@ -112,7 +112,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
     class ContactHolder extends RecyclerView.ViewHolder {
         private TextView fullName;
         private TextView mobileNumber;
-        private ImageButton call;
+        private LinearLayout call;
 
         public ContactHolder(@NonNull View itemView) {
             super(itemView);
