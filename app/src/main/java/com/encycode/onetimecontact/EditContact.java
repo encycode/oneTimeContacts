@@ -1,13 +1,18 @@
 package com.encycode.onetimecontact;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,13 +21,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.encycode.onetimecontact.entity.Contact;
 import com.encycode.onetimecontact.viewModel.ContactViewModel;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
 public class EditContact extends AppCompatActivity {
 
-    TextView fName, lName, mobile, email, company, job;
-    Button save, discard;
+    TextInputLayout tl_fname,tl_mobile;
+    TextInputEditText fName, lName, mobile, email, company, job;
+
     TextView call, msg, mail, wtsp;
     Contact contact;
     int id;
@@ -47,6 +55,9 @@ public class EditContact extends AppCompatActivity {
         email = findViewById(R.id.emailIdET);
         company = findViewById(R.id.companyET);
         job = findViewById(R.id.jobET);
+
+        tl_fname = findViewById(R.id.tl_fname);
+        tl_mobile = findViewById(R.id.tl_mobile);
 
 
         contact = (Contact) getIntent().getSerializableExtra("contactObj");
@@ -98,9 +109,6 @@ public class EditContact extends AppCompatActivity {
             }
         });
 
-        save = findViewById(R.id.saveBtn);
-        discard = findViewById(R.id.discardBtn);
-
         fName.setText(contact.getFirstName());
         lName.setText(contact.getLastName());
         mobile.setText(contact.getMobileNumber());
@@ -108,23 +116,47 @@ public class EditContact extends AppCompatActivity {
         company.setText(contact.getCompanyName());
         job.setText(contact.getJobTitle());
 
+    }
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveContact();
-            }
-        });
+    @Override
+    public void onBackPressed(){
+
+        if (fName.getText().toString().equals(contact.getFirstName()) && lName.getText().toString().equals(contact.getLastName()) &&
+                mobile.getText().toString().equals(contact.getMobileNumber())&& email.getText().toString().equals(contact.getEmailId())&&
+                company.getText().toString().equals(contact.getCompanyName())&& job.getText().toString().equals(contact.getJobTitle())){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+            showDialog();
+        }
+    }
+
+    public void showDialog(){
+        final Dialog dialog = new Dialog(EditContact.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        TextView discard = dialog.findViewById(R.id.discard);
+        TextView save = dialog.findViewById(R.id.save);
 
         discard.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(i);
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveContact();
+                dialog.cancel();
+            }
+        });
 
+        dialog.show();
     }
 
     private void saveContact() {
@@ -136,10 +168,18 @@ public class EditContact extends AppCompatActivity {
         contact.setMobileNumber(mobile.getText().toString());
         contact.setJobTitle(job.getText().toString());
 
-
-        if (fName.getText().toString().trim().isEmpty() || mobile.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Please inserts Mandatory fields", Toast.LENGTH_SHORT).show();
+        if (fName.getText().toString().equals("")){
+            tl_fname.setError("First name is required");
             return;
+        }
+        else{
+            tl_fname.setErrorEnabled(false);
+        }
+        if(mobile.getText().toString().equals("")) {
+            tl_mobile.setError("Mobile number is required");
+            return;
+        }else{
+            tl_mobile.setErrorEnabled(false);
         }
 
         new ContactViewModel(getApplication()).update(contact);
