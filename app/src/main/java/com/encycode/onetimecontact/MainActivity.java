@@ -1,15 +1,23 @@
 package com.encycode.onetimecontact;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -82,11 +90,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.contactsRecyclerView);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        final ContactAdapter adapter = new ContactAdapter();
+
+        final ContactAdapter adapter = new ContactAdapter(getApplicationContext());
         recyclerView.setAdapter(adapter);
+
 
         contactViewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
         contactViewModel.getAllContacts().observe(this, new Observer<List<Contact>>() {
@@ -124,23 +135,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.LEFT) {
-                    new AlertDialog.Builder(MainActivity.this)
-                            .setCancelable(false)
-                            .setTitle("Delete entry")
-                            .setMessage("Are you sure you want to delete this Contact?")
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    contactViewModel.delete(adapter.getContactAt(viewHolder.getAdapterPosition()));
-                                    Toast.makeText(MainActivity.this, "Contact Deleted", Toast.LENGTH_SHORT).show();
-//                                urlAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
-                                }
-                            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+                    final Dialog dialog = new Dialog(MainActivity.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.delete_dialog);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    TextView no = dialog.findViewById(R.id.no);
+                    TextView yes = dialog.findViewById(R.id.yes);
+
+                    no.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                        public void onClick(View view) {
                             Toast.makeText(MainActivity.this, "Contact not Deleted", Toast.LENGTH_SHORT).show();
                             adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                            dialog.cancel();
                         }
-                    }).setIcon(R.drawable.delete).show();
+                    });
+                    yes.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            contactViewModel.delete(adapter.getContactAt(viewHolder.getAdapterPosition()));
+                            Toast.makeText(MainActivity.this, "Contact Deleted", Toast.LENGTH_SHORT).show();
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.show();
                 }
                 if (direction == ItemTouchHelper.RIGHT) {
                     String url = "https://api.whatsapp.com/send?phone=91" + adapter.getContactAt(viewHolder.getAdapterPosition()).getMobileNumber();
@@ -174,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public void deleteContact(Contact contact) {
         contactViewModel.delete(contact);

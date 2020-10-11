@@ -1,10 +1,12 @@
 package com.encycode.onetimecontact.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
@@ -28,6 +30,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
     private List<Contact> contacts = new ArrayList<>();
     private List<Contact> contactsfull;
     private OnItemClickListener listener;
+    Context context;
+
+    public ContactAdapter(Context context) {
+        this.context = context;
+
+    }
 
     @NonNull
     @Override
@@ -42,6 +50,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
         final Contact currentContact = contacts.get(position);
         holder.fullName.setText(new StringBuilder().append(currentContact.getFirstName()).append(" ").append(currentContact.getLastName()).toString());
         holder.mobileNumber.setText(currentContact.getMobileNumber());
+
+        holder.anim.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_scale_animation));
 
         holder.call.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,13 +121,14 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
     class ContactHolder extends RecyclerView.ViewHolder {
         private TextView fullName;
         private TextView mobileNumber;
-        private LinearLayout call;
+        private LinearLayout call,anim;
 
         public ContactHolder(@NonNull View itemView) {
             super(itemView);
             fullName = itemView.findViewById(R.id.fullName);
             mobileNumber = itemView.findViewById(R.id.mobileNumber);
             call = itemView.findViewById(R.id.callButton);
+            anim = itemView.findViewById(R.id.animLinear);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
