@@ -14,6 +14,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ContactViewModel contactViewModel;
     boolean floatSwitch = false;
+    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
         final FloatingActionButton contactBtn = findViewById(R.id.addContactBtn);
         final FloatingActionButton dialpadBtn = findViewById(R.id.dialpadBtn);
 
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
+
 
         mainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,13 +68,20 @@ public class MainActivity extends AppCompatActivity {
                 floatSwitch = !floatSwitch;
                 //Toast.makeText(MainActivity.this, ""+floatSwitch, Toast.LENGTH_SHORT).show();
                 if (floatSwitch) {
-                    mainBtn.setImageDrawable(getDrawable(R.drawable.close));
-                    contactBtn.setVisibility(View.VISIBLE);
-                    dialpadBtn.setVisibility(View.VISIBLE);
+                    mainBtn.startAnimation(rotate_forward);
+                    contactBtn.startAnimation(fab_open);
+                    dialpadBtn.startAnimation(fab_open);
+                    contactBtn.setClickable(true);
+                    dialpadBtn.setClickable(true);
+                    floatSwitch = true;
+
                 } else {
-                    contactBtn.setVisibility(View.GONE);
-                    dialpadBtn.setVisibility(View.GONE);
-                    mainBtn.setImageDrawable(getDrawable(R.drawable.add));
+                    mainBtn.startAnimation(rotate_backward);
+                    contactBtn.startAnimation(fab_close);
+                    dialpadBtn.startAnimation(fab_close);
+                    contactBtn.setClickable(false);
+                    dialpadBtn.setClickable(false);
+                    floatSwitch= false;
                 }
             }
         });

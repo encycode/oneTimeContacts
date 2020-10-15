@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DialerActivity extends AppCompatActivity {
 
@@ -217,9 +219,15 @@ public class DialerActivity extends AppCompatActivity {
     }
 
     public void addVisible() {
-        if (numberField.getText().toString().isEmpty())
+        if (numberField.getText().toString().isEmpty()) {
             add.setVisibility(View.GONE);
-        else
+            numberField.setVisibility(View.GONE);
+            backSpace.setVisibility(View.GONE);
+        }
+        else {
             add.setVisibility(View.VISIBLE);
+            numberField.setVisibility(View.VISIBLE);
+            backSpace.setVisibility(View.VISIBLE);
+        }
     }
 }

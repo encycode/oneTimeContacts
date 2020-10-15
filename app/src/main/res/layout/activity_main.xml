@@ -42,20 +42,23 @@
             android:id="@+id/dialpadBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fabSize="mini"
+            app:fabSize="normal"
             android:layout_gravity="center_horizontal"
-            android:visibility="gone"
-            android:src="@drawable/dialpad"/>
+            android:visibility="invisible"
+            app:elevation="6dp"
+            android:src="@drawable/dialpad"
+            app:pressedTranslationZ="12dp"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addContactBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fabSize="mini"
-            android:visibility="gone"
+            app:fabSize="normal"
+            android:visibility="invisible"
             android:layout_gravity="center_horizontal"
-            android:layout_marginVertical="16dp"
-            android:src="@drawable/contact"/>
+            android:src="@drawable/contact"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/mainBtn"
@@ -63,7 +66,11 @@
             android:layout_height="wrap_content"
             app:fabSize="normal"
             android:src="@drawable/add"
-            android:backgroundTint="@color/red"/>
+            android:backgroundTint="@color/red"
+            android:layout_marginTop="10dp"
+            app:borderWidth="0dp"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"/>
 
     </LinearLayout>
 
