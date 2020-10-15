@@ -45,12 +45,12 @@
         android:gravity="right|center_vertical">
 
         <LinearLayout
-            android:id="@+id/callButton"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right|center_vertical">
 
         <ImageButton
+            android:id="@+id/callButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/shape"

@@ -62,7 +62,7 @@ public class EditContact extends AppCompatActivity {
 
         contact = (Contact) getIntent().getSerializableExtra("contactObj");
 
-        final String phone = getIntent().getStringExtra("mobile");
+        final String phone = contact.getMobileNumber();
 
         call.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +84,7 @@ public class EditContact extends AppCompatActivity {
         mail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String emailStr = getIntent().getStringExtra("email");
+                String emailStr = contact.getEmailId();
                 if (emailStr.isEmpty() || email.getText().toString().isEmpty()) {
                     Toast.makeText(EditContact.this, "Enter Email to use this function", Toast.LENGTH_SHORT).show();
                 } else {
