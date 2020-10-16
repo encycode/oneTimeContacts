@@ -10,7 +10,8 @@
     <color name="red">#F33939</color>
     <color name="lightgreen">#00881E</color>
 
-    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#282828</color>
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#616161</color>
     <color name="BorderTint">#85AAE5</color>
+    <color name="BoxLable">#616161</color>
 
 </resources>

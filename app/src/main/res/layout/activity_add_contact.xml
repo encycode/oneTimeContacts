@@ -9,9 +9,9 @@
     tools:context=".AddContact">
 
     <ScrollView
-        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,128 +19,211 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tl_fname"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="@string/fname"
-                android:textColorHint="@color/white"
-                app:boxStrokeColor="@color/BorderTint"
-                app:hintTextColor="@color/BorderTint"
-                app:startIconDrawable="@drawable/person"
-                app:startIconTint="@color/white">
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tv_fname"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableStart="@drawable/person" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tl_fname"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="@color/white" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_margin="10dp"
+                    android:hint="@string/fname"
+                    android:textColorHint="@color/BoxLable"
+                    app:boxStrokeColor="@color/BorderTint"
+                    app:hintTextColor="@color/BorderTint"
+                    app:startIconTint="@color/white">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tv_fname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="@string/lname"
-                android:textColorHint="@color/white"
-                app:boxStrokeColor="@color/BorderTint"
-                app:hintTextColor="@color/BorderTint"
-                app:startIconDrawable="@drawable/person"
-                app:startIconTint="@color/white">
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tv_lname"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableStart="@drawable/person" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="@color/white" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_margin="10dp"
+                    android:hint="@string/lname"
+                    android:textColorHint="@color/BoxLable"
+                    app:boxStrokeColor="@color/BorderTint"
+                    app:hintTextColor="@color/BorderTint"
+                    app:startIconTint="@color/white">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tl_mobile"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tv_lname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="@string/mob"
-                android:textColorHint="@color/white"
-                app:boxStrokeColor="@color/BorderTint"
-                app:hintTextColor="@color/BorderTint"
-                app:startIconDrawable="@drawable/call"
-                app:startIconTint="@color/white">
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tv_mobile"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableStart="@drawable/call" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tl_mobile"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textColor="@color/white" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_margin="10dp"
+                    android:hint="@string/mob"
+                    android:textColorHint="@color/BoxLable"
+                    app:boxStrokeColor="@color/BorderTint"
+                    app:hintTextColor="@color/BorderTint"
+                    app:startIconTint="@color/white">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tv_mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textColor="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="@string/email"
-                android:textColorHint="@color/white"
-                app:boxStrokeColor="@color/BorderTint"
-                app:hintTextColor="@color/BorderTint"
-                app:startIconDrawable="@drawable/email"
-                app:startIconTint="@color/white">
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tv_email"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableStart="@drawable/email" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/white" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_margin="10dp"
+                    android:hint="@string/email"
+                    android:textColorHint="@color/BoxLable"
+                    app:boxStrokeColor="@color/BorderTint"
+                    app:hintTextColor="@color/BorderTint"
+                    app:startIconTint="@color/white">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tv_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="@string/company"
-                android:textColorHint="@color/white"
-                app:boxStrokeColor="@color/BorderTint"
-                app:hintTextColor="@color/BorderTint"
-                app:startIconDrawable="@drawable/company"
-                app:startIconTint="@color/white">
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tv_company"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableStart="@drawable/company" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="@color/white" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_margin="10dp"
+                    android:hint="@string/company"
+                    android:textColorHint="@color/BoxLable"
+                    app:boxStrokeColor="@color/BorderTint"
+                    app:hintTextColor="@color/BorderTint"
+                    app:startIconTint="@color/white">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tv_company"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="@string/jtitle"
-                android:textColorHint="@color/white"
-                app:boxStrokeColor="@color/BorderTint"
-                app:hintTextColor="@color/BorderTint"
-                app:startIconDrawable="@drawable/job_title"
-                app:startIconTint="@color/white">
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tv_jobtitle"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableStart="@drawable/job_title" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="@color/white" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_margin="10dp"
+                    android:hint="@string/jtitle"
+                    android:textColorHint="@color/BoxLable"
+                    app:boxStrokeColor="@color/BorderTint"
+                    app:hintTextColor="@color/BorderTint"
+                    app:startIconTint="@color/white">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tv_jobtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>
